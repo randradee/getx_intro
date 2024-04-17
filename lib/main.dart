@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:getx_intro/value_controller.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,27 +17,17 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class MyHomePage extends StatelessWidget {
+  MyHomePage({super.key});
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
   final textController = TextEditingController();
-  String? value;
 
-  @override
-  void initState() {
-    super.initState();
-    value = '';
-  }
+  final valueController = ValueController();
 
   @override
   Widget build(BuildContext context) {
@@ -45,17 +37,29 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Valor definido $value'),
+            GetBuilder<ValueController>(
+              init: valueController,
+              builder: (controller) {
+                return Text('Valor definido ${controller.value}');
+              },
+            ),
             TextField(
               controller: textController,
             ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  value = textController.text;
-                });
+            GetBuilder<ValueController>(
+              init: valueController,
+              builder: (_) {
+                return _.isLoading
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () {
+                          String value = textController.text;
+
+                          valueController.setValue(value);
+                        },
+                        child: const Text('Click'),
+                      );
               },
-              child: const Text('Click'),
             )
           ],
         ),
