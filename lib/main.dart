@@ -15,18 +15,51 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
 
-  final String title;
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final textController = TextEditingController();
+  String? value;
+
+  @override
+  void initState() {
+    super.initState();
+    value = '';
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Valor definido $value'),
+            TextField(
+              controller: textController,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  value = textController.text;
+                });
+              },
+              child: const Text('Click'),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
