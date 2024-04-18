@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_getx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:getx_intro/value_controller.dart';
 
@@ -37,19 +38,22 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GetBuilder<ValueController>(
+            GetX<ValueController>(
               init: valueController,
               builder: (controller) {
-                return Text('Valor definido ${controller.value}');
+                return Text('Valor definido ${controller.definedValue}');
               },
             ),
-            TextField(
-              controller: textController,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 32),
+              child: TextField(
+                controller: textController,
+              ),
             ),
-            GetBuilder<ValueController>(
+            GetX<ValueController>(
               init: valueController,
               builder: (_) {
-                return _.isLoading
+                return _.isLoading.value
                     ? const CircularProgressIndicator()
                     : ElevatedButton(
                         onPressed: () {
