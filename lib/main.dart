@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_intro/idade_controller.dart';
-import 'package:getx_intro/nome_controller.dart';
+import 'package:getx_intro/user_controller.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,8 +26,7 @@ class HomePage extends StatelessWidget {
 
   final nameController = TextEditingController();
   final ageController = TextEditingController();
-  final idadeController = IdadeController();
-  final nomeController = NomeController();
+  final userController = UserController();
 
   TextStyle commonStyle() => const TextStyle(
         fontSize: 17,
@@ -47,7 +45,7 @@ class HomePage extends StatelessWidget {
             Obx(
               () {
                 return Text(
-                  'Nome: ${nomeController.nome}',
+                  'Nome: ${userController.user.value.name}',
                   style: commonStyle(),
                 );
               },
@@ -56,7 +54,7 @@ class HomePage extends StatelessWidget {
             Obx(
               () {
                 return Text(
-                  'Idade: ${idadeController.idade}',
+                  'Idade: ${userController.user.value.age}',
                   style: commonStyle(),
                 );
               },
@@ -84,7 +82,7 @@ class HomePage extends StatelessWidget {
                 // Botão para salvar o nome
                 ElevatedButton(
                   onPressed: () {
-                    nomeController.updateNome(nameController.text);
+                    userController.setUserName(nameController.text);
                   },
                   child: const Text('Salvar'),
                 ),
@@ -110,7 +108,7 @@ class HomePage extends StatelessWidget {
                 // Botão para salvar a idade
                 ElevatedButton(
                   onPressed: () {
-                    idadeController.updateIdade(ageController.text);
+                    userController.setUserAge(int.parse(ageController.text));
                   },
                   child: const Text('Salvar'),
                 ),
