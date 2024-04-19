@@ -1,6 +1,9 @@
-import 'package:get/get.dart';
+class UserModel {
+  String name;
+  int age;
 
-class UserModel extends GetxController {
-  int age = 0;
-  String name = '';
+  UserModel({
+    this.name = '',
+    this.age = 0,
+  });
 }

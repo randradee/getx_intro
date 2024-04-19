@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_intro/data_screen.dart';
 import 'package:getx_intro/user_controller.dart';
 
 void main() {
+  Get.put<UserController>(UserController());
+
   runApp(const MyApp());
 }
 
@@ -26,12 +29,8 @@ class HomePage extends StatelessWidget {
 
   final nameController = TextEditingController();
   final ageController = TextEditingController();
-  final userController = UserController();
 
-  TextStyle commonStyle() => const TextStyle(
-        fontSize: 17,
-        fontWeight: FontWeight.w500,
-      );
+  final UserController userController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -42,30 +41,6 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Obx(
-              () {
-                return Text(
-                  'Nome: ${userController.user.value.name}',
-                  style: commonStyle(),
-                );
-              },
-            ),
-
-            Obx(
-              () {
-                return Text(
-                  'Idade: ${userController.user.value.age}',
-                  style: commonStyle(),
-                );
-              },
-            ),
-
-            const Divider(
-              thickness: 1.5,
-              color: Colors.blue,
-              height: 20,
-            ),
-
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
@@ -117,6 +92,19 @@ class HomePage extends StatelessWidget {
 
             // Espaçamento
             const SizedBox(height: 10),
+
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return DataScreen();
+                    },
+                  ),
+                );
+              },
+              child: const Text('Tela de dados'),
+            ),
           ],
         ),
       ),
